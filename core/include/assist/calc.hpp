@@ -25,6 +25,7 @@ struct CalcResult {
     double value = 0;
     std::size_t begin = 0;
     std::size_t end = 0;
+    unsigned operators = 0;  // how many plus, minus, times, divide, power or percent-of signs were evaluated
 };
 
 // Find and evaluate the first arithmetic expression in the tokens.

@@ -144,3 +144,11 @@ TEST_CASE("format_number: ten significant digits and no clutter") {
     CHECK(format_number(1.0 / 3.0) == "0.3333333333");
     CHECK(format_number(2.8284271247461903) == "2.828427125");
 }
+
+TEST_CASE("calc: symbols and separators as they come in typed text") {
+    CHECK(calc("what's 15% of 68").value == doctest::Approx(10.2));
+    CHECK(calc("what is 25% of $54,788").value == doctest::Approx(13697));
+    CHECK(calc("what is 6+7").value == 13);
+    CHECK(calc("what is 6*7").value == 42);
+    CHECK(calc("1,000 times 2,500").value == 2500000);
+}

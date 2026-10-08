@@ -387,3 +387,28 @@ TEST_CASE("dates: a leap day is found even when it is years away") {
     REQUIRE(d.has_value());
     CHECK(d->day == day_of(2032, 2, 29));
 }
+
+TEST_CASE("lexer: thousands separators join, other commas do not") {
+    auto numbers = [](std::string_view text) {
+        Lexed l(text);
+        std::vector<double> out;
+        for (const auto& k : l.tokens()) {
+            if (k.kind == TokKind::Number) out.push_back(k.value);
+        }
+        return out;
+    };
+    CHECK(numbers("25% of $54,788") == std::vector<double>{25, 54788});
+    CHECK(numbers("1,000,000 dollars") == std::vector<double>{1000000});
+    CHECK(numbers("12,34") == std::vector<double>{12, 34});
+    CHECK(numbers("1,2345") == std::vector<double>{1, 2345});
+    CHECK(numbers("1234,567") == std::vector<double>{1234, 567});
+    CHECK(numbers("5, 6, 7") == std::vector<double>{5, 6, 7});
+    CHECK(numbers("3,500.25") == std::vector<double>{3500.25});
+}
+
+TEST_CASE("lexer: % + and * become the words they stand for") {
+    Lexed l("15% of 68 and 5+3 and 4*2");
+    std::string joined;
+    for (const auto& k : l.tokens()) joined += std::string(k.text) + "|";
+    CHECK(joined == "15|percent|of|68|and|5|plus|3|and|4|times|2|");
+}

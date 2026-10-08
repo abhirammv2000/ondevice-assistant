@@ -1,0 +1,27 @@
+{
+ "parity": {
+  "utterances": 5500,
+  "same_intent": 5500,
+  "max_confidence_difference": 2.1466560363725407e-06
+ },
+ "routing": {
+  "handled_intent": {
+   "handled_correctly": 0.8025641025641026,
+   "sent_on": 0.18461538461538463,
+   "handled_wrongly": 0.01282051282051282,
+   "n": 390
+  },
+  "other_intent": {
+   "handled_correctly": 0.0,
+   "sent_on": 0.9982968369829683,
+   "handled_wrongly": 0.0017031630170316302,
+   "n": 4110
+  },
+  "oos": {
+   "handled_correctly": 0.0,
+   "sent_on": 0.989,
+   "handled_wrongly": 0.011,
+   "n": 1000
+  }
+ }
+}

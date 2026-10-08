@@ -68,6 +68,10 @@ struct EngineConfig {
     // score makes the device ask which one was meant.
     float contact_threshold = 0.7F;
     float ambiguity_gap = 0.05F;
+    // When the model is unsure but the words contain a real calculation ("what is twelve times seven"), do the
+    // sum anyway. The grammar is exact where the model is not, and a wrong sum is rare because it needs two
+    // numbers and an operator. Turn it off to see the model on its own.
+    bool arithmetic_rescue = true;
     std::size_t contact_cache_capacity = 128;
     std::uint64_t random_seed = 0;  // 0 means seed from the operating system
 };

@@ -172,6 +172,7 @@ CalcResult evaluate_spoken(Tokens t) noexcept {
     CalcResult result;
     result.begin = begin;
     result.end = operand_end;
+    for (std::size_t k = 0; k < count; ++k) result.operators += items[k].is_operand ? 0U : 1U;
     if (status != CalcStatus::Ok) {
         result.status = status;
         return result;

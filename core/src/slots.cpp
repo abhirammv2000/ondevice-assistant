@@ -73,6 +73,13 @@ void SlotText::lex(std::string_view in) noexcept {
         if (is_digit(c)) {
             std::size_t j = i;
             while (j < n && is_digit(in[j])) ++j;
+            // thousands separators, as in 54,788 and 1,000,000, but not 12,34 or 1,2345
+            if (j - i <= 3) {
+                while (j + 3 < n && in[j] == ',' && is_digit(in[j + 1]) && is_digit(in[j + 2]) && is_digit(in[j + 3]) &&
+                       !(j + 4 < n && is_digit(in[j + 4]))) {
+                    j += 4;
+                }
+            }
             std::size_t int_end = j;
             bool decimal = false;
             if (j + 1 < n && in[j] == '.' && is_digit(in[j + 1])) {
@@ -84,7 +91,12 @@ void SlotText::lex(std::string_view in) noexcept {
             tok.kind = TokKind::Number;
             // at most 15 digits on each side of the point, so a long run of digits cannot overflow the double
             double value = 0;
-            for (std::size_t k = i; k < int_end && k - i < 15; ++k) value = value * 10 + (in[k] - '0');
+            int digits_used = 0;
+            for (std::size_t k = i; k < int_end && digits_used < 15; ++k) {
+                if (in[k] == ',') continue;
+                value = value * 10 + (in[k] - '0');
+                ++digits_used;
+            }
             if (decimal) {
                 double place = 0.1;
                 for (std::size_t k = int_end + 1; k < j && k - int_end <= 15; ++k) {
@@ -128,6 +140,15 @@ void SlotText::lex(std::string_view in) noexcept {
             while (j < n && (is_alpha(in[j]) || (in[j] == '\'' && j + 1 < n && is_alpha(in[j + 1])))) ++j;
             word(copy_lower(i, j));
             i = j;
+        } else if (c == '%' || c == '+' || c == '*') {
+            // the symbols that carry arithmetic in typed text are the words they stand for
+            const std::string_view literal = c == '%' ? "percent" : c == '+' ? "plus" : "times";
+            const std::size_t start = w;
+            if (w + literal.size() <= kMaxChars) {
+                for (const char ch : literal) buf_[w++] = ch;
+                word({buf_ + start, literal.size()});
+            }
+            ++i;
         } else {
             ++i;
         }

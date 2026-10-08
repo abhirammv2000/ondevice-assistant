@@ -33,6 +33,7 @@ set(ASSIST_SOURCES
   core/src/fuzzy.cpp
   core/src/redact.cpp
   core/src/engine.cpp
+  core/src/json.cpp
 )
 
 add_library(assist_core STATIC ${ASSIST_SOURCES})
@@ -41,6 +42,9 @@ target_link_libraries(assist_core PUBLIC Threads::Threads)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
   target_compile_options(assist_core PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow)
 endif()
+
+add_executable(assist_cli cli/main.cpp)
+target_link_libraries(assist_cli PRIVATE assist_core)
 
 if(ASSIST_BUILD_TESTS)
   enable_testing()
@@ -55,6 +59,7 @@ if(ASSIST_BUILD_TESTS)
     tests/test_redact.cpp
     tests/test_lru.cpp
     tests/test_engine.cpp
+    tests/test_json.cpp
   )
   target_link_libraries(assist_tests PRIVATE assist_core)
   target_include_directories(assist_tests PRIVATE third_party tests)

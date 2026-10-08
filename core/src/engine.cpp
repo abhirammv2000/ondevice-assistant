@@ -489,6 +489,19 @@ Result Engine::handle(std::string_view utterance) {
     };
 
     if (p.confidence < shared_->config.handle_threshold) {
+        if (shared_->config.arithmetic_rescue) {
+            SlotText text;
+            text.lex(utterance);
+            const CalcResult sum = evaluate_spoken(text.tokens());
+            if (sum.status == CalcStatus::Ok && sum.operators >= 1) {
+                base.intent = "calculator";
+                base.route = Route::OnDevice;
+                base.reply = format_number(sum.value) + ".";
+                base.slots = {{"value", format_number(sum.value)}};
+                base.reason = "arithmetic_rescue";
+                return base;
+            }
+        }
         base.route = Route::Escalate;
         base.reason = "low_confidence";
         return finish_escalation(std::move(base));
