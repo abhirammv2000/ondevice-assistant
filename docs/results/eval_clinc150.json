@@ -1,0 +1,150 @@
+{
+ "int8": {
+  "n_features": 8192,
+  "in_scope_accuracy": 0.8893333333333333,
+  "n_in_scope": 4500,
+  "n_out_of_scope": 1000,
+  "auroc_out_of_scope": 0.9232484444444444,
+  "ece": 0.015485120698809656,
+  "thresholds": [
+   {
+    "threshold": 0.0,
+    "answered_on_device": 1.0,
+    "accuracy_when_answered": 0.8893333333333333,
+    "out_of_scope_caught": 0.0,
+    "out_of_scope_answered_wrongly": 1.0
+   },
+   {
+    "threshold": 0.2,
+    "answered_on_device": 0.99,
+    "accuracy_when_answered": 0.896969696969697,
+    "out_of_scope_caught": 0.21,
+    "out_of_scope_answered_wrongly": 0.79
+   },
+   {
+    "threshold": 0.3,
+    "answered_on_device": 0.9706666666666667,
+    "accuracy_when_answered": 0.9107142857142857,
+    "out_of_scope_caught": 0.407,
+    "out_of_scope_answered_wrongly": 0.593
+   },
+   {
+    "threshold": 0.4,
+    "answered_on_device": 0.9448888888888889,
+    "accuracy_when_answered": 0.9238005644402634,
+    "out_of_scope_caught": 0.557,
+    "out_of_scope_answered_wrongly": 0.443
+   },
+   {
+    "threshold": 0.5,
+    "answered_on_device": 0.9184444444444444,
+    "accuracy_when_answered": 0.9356399709654004,
+    "out_of_scope_caught": 0.663,
+    "out_of_scope_answered_wrongly": 0.337
+   },
+   {
+    "threshold": 0.6,
+    "answered_on_device": 0.888,
+    "accuracy_when_answered": 0.9502002002002002,
+    "out_of_scope_caught": 0.764,
+    "out_of_scope_answered_wrongly": 0.236
+   },
+   {
+    "threshold": 0.7,
+    "answered_on_device": 0.85,
+    "accuracy_when_answered": 0.9605228758169935,
+    "out_of_scope_caught": 0.847,
+    "out_of_scope_answered_wrongly": 0.153
+   },
+   {
+    "threshold": 0.8,
+    "answered_on_device": 0.8117777777777778,
+    "accuracy_when_answered": 0.9715302491103203,
+    "out_of_scope_caught": 0.902,
+    "out_of_scope_answered_wrongly": 0.098
+   },
+   {
+    "threshold": 0.9,
+    "answered_on_device": 0.7504444444444445,
+    "accuracy_when_answered": 0.9825288717796861,
+    "out_of_scope_caught": 0.948,
+    "out_of_scope_answered_wrongly": 0.052
+   }
+  ]
+ },
+ "int8_bytes": 1232196,
+ "float32": {
+  "n_features": 8192,
+  "in_scope_accuracy": 0.8893333333333333,
+  "n_in_scope": 4500,
+  "n_out_of_scope": 1000,
+  "auroc_out_of_scope": 0.923185,
+  "ece": 0.014279231026768709,
+  "thresholds": [
+   {
+    "threshold": 0.0,
+    "answered_on_device": 1.0,
+    "accuracy_when_answered": 0.8893333333333333,
+    "out_of_scope_caught": 0.0,
+    "out_of_scope_answered_wrongly": 1.0
+   },
+   {
+    "threshold": 0.2,
+    "answered_on_device": 0.9902222222222222,
+    "accuracy_when_answered": 0.8967684021543986,
+    "out_of_scope_caught": 0.21,
+    "out_of_scope_answered_wrongly": 0.79
+   },
+   {
+    "threshold": 0.3,
+    "answered_on_device": 0.9697777777777777,
+    "accuracy_when_answered": 0.9113198900091659,
+    "out_of_scope_caught": 0.405,
+    "out_of_scope_answered_wrongly": 0.595
+   },
+   {
+    "threshold": 0.4,
+    "answered_on_device": 0.9446666666666667,
+    "accuracy_when_answered": 0.9242531169136674,
+    "out_of_scope_caught": 0.558,
+    "out_of_scope_answered_wrongly": 0.442
+   },
+   {
+    "threshold": 0.5,
+    "answered_on_device": 0.9182222222222223,
+    "accuracy_when_answered": 0.936108422071636,
+    "out_of_scope_caught": 0.664,
+    "out_of_scope_answered_wrongly": 0.336
+   },
+   {
+    "threshold": 0.6,
+    "answered_on_device": 0.8877777777777778,
+    "accuracy_when_answered": 0.9499374217772215,
+    "out_of_scope_caught": 0.765,
+    "out_of_scope_answered_wrongly": 0.235
+   },
+   {
+    "threshold": 0.7,
+    "answered_on_device": 0.85,
+    "accuracy_when_answered": 0.9605228758169935,
+    "out_of_scope_caught": 0.846,
+    "out_of_scope_answered_wrongly": 0.154
+   },
+   {
+    "threshold": 0.8,
+    "answered_on_device": 0.8113333333333334,
+    "accuracy_when_answered": 0.971240755957272,
+    "out_of_scope_caught": 0.902,
+    "out_of_scope_answered_wrongly": 0.098
+   },
+   {
+    "threshold": 0.9,
+    "answered_on_device": 0.7502222222222222,
+    "accuracy_when_answered": 0.9825236966824644,
+    "out_of_scope_caught": 0.948,
+    "out_of_scope_answered_wrongly": 0.052
+   }
+  ]
+ },
+ "float32_bytes": 4917936
+}

@@ -1,0 +1,7 @@
+build/
+build_local/
+.venv/
+__pycache__/
+data/raw/
+*.pyc
+.DS_Store

@@ -1,0 +1,52 @@
+[
+ {
+  "bits": 12,
+  "n_features": 4096,
+  "train_seconds": 53,
+  "validation_accuracy": 0.89,
+  "int8_bytes": 617796,
+  "float32_bytes": 2460336,
+  "test_accuracy_int8": 0.886,
+  "test_accuracy_float32": 0.8851111111111111
+ },
+ {
+  "bits": 13,
+  "n_features": 8192,
+  "train_seconds": 70,
+  "validation_accuracy": 0.8976666666666666,
+  "int8_bytes": 1232196,
+  "float32_bytes": 4917936,
+  "test_accuracy_int8": 0.8893333333333333,
+  "test_accuracy_float32": 0.8893333333333333
+ },
+ {
+  "bits": 14,
+  "n_features": 16384,
+  "train_seconds": 121,
+  "validation_accuracy": 0.8976666666666666,
+  "int8_bytes": 2460996,
+  "float32_bytes": 9833136,
+  "test_accuracy_int8": 0.8911111111111111,
+  "test_accuracy_float32": 0.892
+ },
+ {
+  "bits": 15,
+  "n_features": 32768,
+  "train_seconds": 212,
+  "validation_accuracy": 0.9003333333333333,
+  "int8_bytes": 4918596,
+  "float32_bytes": 19663536,
+  "test_accuracy_int8": 0.8917777777777778,
+  "test_accuracy_float32": 0.8913333333333333
+ },
+ {
+  "bits": 16,
+  "n_features": 65536,
+  "train_seconds": 408,
+  "validation_accuracy": 0.9003333333333333,
+  "int8_bytes": 9833796,
+  "float32_bytes": 39324336,
+  "test_accuracy_int8": 0.8928888888888888,
+  "test_accuracy_float32": 0.8933333333333333
+ }
+]
