@@ -78,6 +78,10 @@ std::string to_json(const Result& r) {
         append_json_string(out, name);
         char buf[32];
         std::snprintf(buf, sizeof buf, ":%.4f", static_cast<double>(value));
+        for (char& c : buf) {
+            if (c == ',') c = '.';  // a locale with a decimal comma must not break the JSON
+            if (c == 0) break;
+        }
         out += buf;
     };
     field("route", to_string(r.route));
