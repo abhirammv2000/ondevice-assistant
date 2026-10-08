@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
@@ -70,6 +71,21 @@ inline std::vector<std::byte> build_trigger_model(const std::vector<std::string>
     const std::uint32_t crc = assist::crc32({b.data(), b.size()});
     put(b, &crc, 4);
     return b;
+}
+
+// The model the engine tests use: fifteen classes named like the real intents, each pulled by a trigger word.
+inline assist::Model stub_model() {
+    const std::vector<std::string> classes{"timer", "alarm", "time", "date", "calculator", "flip_coin", "roll_dice", "make_call",
+                                           "text", "reminder_update", "greeting", "goodbye", "thank_you", "weather", "other"};
+    const std::vector<std::pair<std::string, std::string>> triggers{
+        {"timer", "timer"}, {"wake", "alarm"}, {"alarm", "alarm"}, {"time", "time"}, {"date", "date"}, {"calculate", "calculator"},
+        {"coin", "flip_coin"}, {"flip", "flip_coin"}, {"dice", "roll_dice"}, {"die", "roll_dice"}, {"roll", "roll_dice"},
+        {"call", "make_call"}, {"text", "text"}, {"remind", "reminder_update"}, {"hello", "greeting"}, {"goodbye", "goodbye"},
+        {"thanks", "thank_you"}, {"weather", "weather"}};
+    const auto bytes = build_trigger_model(classes, triggers);
+    assist::Model m;
+    if (assist::Model::from_bytes(bytes, m) != assist::LoadStatus::Ok) throw std::runtime_error("the stub model did not load");
+    return m;
 }
 
 }  // namespace testutil

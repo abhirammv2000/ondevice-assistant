@@ -34,6 +34,8 @@ set(ASSIST_SOURCES
   core/src/redact.cpp
   core/src/engine.cpp
   core/src/json.cpp
+  core/src/service.cpp
+  core/src/stream.cpp
 )
 
 add_library(assist_core STATIC ${ASSIST_SOURCES})
@@ -60,9 +62,17 @@ if(ASSIST_BUILD_TESTS)
     tests/test_lru.cpp
     tests/test_engine.cpp
     tests/test_json.cpp
+    tests/test_concurrency.cpp
+    tests/test_no_alloc.cpp
+    tests/alloc_counter.cpp
   )
   target_link_libraries(assist_tests PRIVATE assist_core)
   target_include_directories(assist_tests PRIVATE third_party tests)
   target_compile_definitions(assist_tests PRIVATE ASSIST_GOLDEN_DIR="${CMAKE_SOURCE_DIR}/tests/golden")
   add_test(NAME unit COMMAND assist_tests)
+endif()
+
+if(ASSIST_BUILD_BENCH)
+  add_executable(assist_bench bench/bench.cpp)
+  target_link_libraries(assist_bench PRIVATE assist_core)
 endif()

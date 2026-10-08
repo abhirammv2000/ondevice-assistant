@@ -1,0 +1,24 @@
+{
+  "rows": [
+    {"name": "tokenizer: fixed buffers, no allocation", "median_ns": 154.628, "p99_ns": 222.363, "per_second": 6.46713e+06},
+    {"name": "tokenizer: strings, vectors and a std::set", "median_ns": 1034.95, "p99_ns": 1588.65, "per_second": 966231},
+    {"name": "predict: int8 weights", "median_ns": 1107.78, "p99_ns": 1547.62, "per_second": 902705},
+    {"name": "predict: float32 weights", "median_ns": 1179.25, "p99_ns": 2126.96, "per_second": 847996},
+    {"name": "classify: tokenize and predict", "median_ns": 1289.53, "p99_ns": 1824.46, "per_second": 775474},
+    {"name": "handle: set a timer for ten minutes", "median_ns": 1664.89, "p99_ns": 2435.5, "per_second": 600638},
+    {"name": "handle: wake me at 7:30 tomorrow", "median_ns": 2106.26, "p99_ns": 3137.61, "per_second": 474774},
+    {"name": "handle: call mom", "median_ns": 1567.85, "p99_ns": 2303.36, "per_second": 637818},
+    {"name": "handle: what is twelve times seven", "median_ns": 1867.1, "p99_ns": 2667.41, "per_second": 535591},
+    {"name": "handle: tell me a joke about my email jane@x.com", "median_ns": 2394.42, "p99_ns": 4054.08, "per_second": 417638},
+    {"name": "trie + bounded edit distance, 1000 names", "median_ns": 29461.5, "p99_ns": 73673, "per_second": 33942.6},
+    {"name": "whole-name edit distance against every name, 1000", "median_ns": 161459, "p99_ns": 183864, "per_second": 6193.54},
+    {"name": "trie + bounded edit distance, 10000 names", "median_ns": 270920, "p99_ns": 344789, "per_second": 3691.13},
+    {"name": "whole-name edit distance against every name, 10000", "median_ns": 1.69102e+06, "p99_ns": 2.00057e+06, "per_second": 591.359},
+    {"name": "LruCache: preallocated, open addressing", "median_ns": 13.5205, "p99_ns": 22.2124, "per_second": 7.39617e+07},
+    {"name": "std::list + std::unordered_map", "median_ns": 53.5537, "p99_ns": 103.13, "per_second": 1.86728e+07},
+    {"name": "map the file, skip the checksum", "median_ns": 402150, "p99_ns": 1.39255e+06, "per_second": 2486.64},
+    {"name": "map the file and verify the checksum (reads every page)", "median_ns": 3.17969e+06, "p99_ns": 4.34494e+06, "per_second": 314.496},
+    {"name": "copy the bytes first, then parse (from_bytes)", "median_ns": 64046.3, "p99_ns": 80076.1, "per_second": 15613.7}
+  ],
+  "extra": {"bounded_queue_mitems_per_s": 6.73291, "service_requests_per_s_1_workers": 580164, "service_requests_per_s_2_workers": 442314, "service_requests_per_s_4_workers": 633220, "service_requests_per_s_8_workers": 553908, "spsc_naive_mitems_per_s": 208.901, "spsc_ring_mitems_per_s": 217.421}
+}

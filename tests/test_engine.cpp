@@ -13,20 +13,6 @@ namespace {
 // 2026-10-08 is a Thursday, 09:15
 const LocalTime kNow{2026, 10, 8, 9, 15, 0};
 
-Model stub_model() {
-    const std::vector<std::string> classes{"timer", "alarm", "time", "date", "calculator", "flip_coin", "roll_dice", "make_call",
-                                           "text", "reminder_update", "greeting", "goodbye", "thank_you", "weather", "other"};
-    const std::vector<std::pair<std::string, std::string>> triggers{
-        {"timer", "timer"}, {"wake", "alarm"}, {"alarm", "alarm"}, {"time", "time"}, {"date", "date"}, {"calculate", "calculator"},
-        {"coin", "flip_coin"}, {"flip", "flip_coin"}, {"dice", "roll_dice"}, {"die", "roll_dice"}, {"roll", "roll_dice"},
-        {"call", "make_call"}, {"text", "text"}, {"remind", "reminder_update"}, {"hello", "greeting"}, {"goodbye", "goodbye"},
-        {"thanks", "thank_you"}, {"weather", "weather"}};
-    const auto bytes = testutil::build_trigger_model(classes, triggers);
-    Model m;
-    REQUIRE(Model::from_bytes(bytes, m) == LoadStatus::Ok);
-    return m;
-}
-
 struct Fixture {
     std::shared_ptr<FixedClock> clock = std::make_shared<FixedClock>(kNow);
     Engine engine;
@@ -36,7 +22,7 @@ struct Fixture {
         c.random_seed = 12345;
         return c;
     }())
-        : engine(stub_model(), clock, config) {
+        : engine(testutil::stub_model(), clock, config) {
         engine.set_contacts({{1, "Mom"}, {2, "John Smith"}, {3, "Jon Snow"}, {4, "Sarah Connor"}, {5, "Sara Conner"}, {6, "Dana"}});
     }
 

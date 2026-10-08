@@ -1,8 +1,8 @@
 #include "assist/calc.hpp"
 
 #include <array>
-#include <charconv>
 #include <cmath>
+#include <cstdio>
 
 namespace assist {
 namespace {
@@ -189,9 +189,14 @@ CalcResult evaluate_spoken(Tokens t) noexcept {
 
 std::string format_number(double value) {
     if (value == 0) return "0";  // also turns -0 into 0
+    // snprintf and not std::to_chars, which needs a newer Apple deployment target for floating point. A host that
+    // sets a comma-decimal locale would print "0,3", so the comma is turned back into a point.
     char buf[64];
-    const auto r = std::to_chars(buf, buf + sizeof buf, value, std::chars_format::general, 10);
-    return std::string(buf, r.ptr);
+    std::snprintf(buf, sizeof buf, "%.10g", value);
+    for (char* p = buf; *p != '\0'; ++p) {
+        if (*p == ',') *p = '.';
+    }
+    return buf;
 }
 
 }  // namespace assist
