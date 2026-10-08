@@ -74,7 +74,7 @@ inline std::vector<std::byte> build_trigger_model(const std::vector<std::string>
 }
 
 // The model the engine tests use: fifteen classes named like the real intents, each pulled by a trigger word.
-inline assist::Model stub_model() {
+inline std::vector<std::byte> stub_model_bytes() {
     const std::vector<std::string> classes{"timer", "alarm", "time", "date", "calculator", "flip_coin", "roll_dice", "make_call",
                                            "text", "reminder_update", "greeting", "goodbye", "thank_you", "weather", "other"};
     const std::vector<std::pair<std::string, std::string>> triggers{
@@ -82,7 +82,11 @@ inline assist::Model stub_model() {
         {"coin", "flip_coin"}, {"flip", "flip_coin"}, {"dice", "roll_dice"}, {"die", "roll_dice"}, {"roll", "roll_dice"},
         {"call", "make_call"}, {"text", "text"}, {"remind", "reminder_update"}, {"hello", "greeting"}, {"goodbye", "goodbye"},
         {"thanks", "thank_you"}, {"weather", "weather"}};
-    const auto bytes = build_trigger_model(classes, triggers);
+    return build_trigger_model(classes, triggers);
+}
+
+inline assist::Model stub_model() {
+    const auto bytes = stub_model_bytes();
     assist::Model m;
     if (assist::Model::from_bytes(bytes, m) != assist::LoadStatus::Ok) throw std::runtime_error("the stub model did not load");
     return m;

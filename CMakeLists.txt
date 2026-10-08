@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ondevice_assistant VERSION 0.1.0 LANGUAGES CXX)
+project(ondevice_assistant VERSION 0.1.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -45,6 +45,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
   target_compile_options(assist_core PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow)
 endif()
 
+add_library(assist_capi STATIC capi/capi.cpp)
+target_include_directories(assist_capi PUBLIC capi/include)
+target_link_libraries(assist_capi PUBLIC assist_core)
+
 add_executable(assist_cli cli/main.cpp)
 target_link_libraries(assist_cli PRIVATE assist_core)
 
@@ -64,11 +68,14 @@ if(ASSIST_BUILD_TESTS)
     tests/test_json.cpp
     tests/test_concurrency.cpp
     tests/test_no_alloc.cpp
+    tests/test_capi.cpp
+    tests/capi_c_check.c
     tests/alloc_counter.cpp
   )
-  target_link_libraries(assist_tests PRIVATE assist_core)
+  target_link_libraries(assist_tests PRIVATE assist_core assist_capi)
   target_include_directories(assist_tests PRIVATE third_party tests)
   target_compile_definitions(assist_tests PRIVATE ASSIST_GOLDEN_DIR="${CMAKE_SOURCE_DIR}/tests/golden")
+  set_source_files_properties(tests/capi_c_check.c PROPERTIES COMPILE_OPTIONS "-std=c99;-Wall;-Wextra;-Wpedantic;-Werror")
   add_test(NAME unit COMMAND assist_tests)
 endif()
 
