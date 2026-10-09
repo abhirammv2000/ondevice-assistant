@@ -1,0 +1,87 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  cpp:
+    name: C++ (${{ matrix.os }}, ${{ matrix.cxx }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, cxx: g++ }
+          - { os: ubuntu-latest, cxx: clang++ }
+          - { os: macos-latest, cxx: clang++ }
+    steps:
+      - uses: actions/checkout@v4
+      - name: build
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+          cmake --build build -j 4
+      - name: test
+        run: ctest --test-dir build --output-on-failure
+
+  sanitizers:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: "ASan and UBSan, all tests", sanitize: "address,undefined", filter: "" }
+          - { name: "TSan, threaded tests", sanitize: "thread", filter: "-tc=*concurren*,capi*,*stream*,*service*" }
+    steps:
+      - uses: actions/checkout@v4
+      - name: build and run
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DASSIST_SANITIZE="${{ matrix.sanitize }}" -DASSIST_BUILD_BENCH=OFF
+          cmake --build build -j 4
+          ./build/assist_tests ${{ matrix.filter }}
+
+  fuzz-smoke:
+    name: fuzz for 30 seconds each
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: build
+        run: |
+          sudo apt-get update && sudo apt-get install -y clang-18 libclang-rt-18-dev
+          cmake -S . -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++-18 -DCMAKE_C_COMPILER=clang-18 \
+            -DASSIST_BUILD_FUZZ=ON -DASSIST_BUILD_TESTS=OFF -DASSIST_BUILD_BENCH=OFF
+          cmake --build build -j 4
+      - name: run
+        run: |
+          mkdir -p corpus/model corpus/text
+          ./build/make_model_seed corpus/model/stub.pmodel
+          cp fuzz/seeds/text/* corpus/text/
+          ./build/fuzz_model corpus/model -max_total_time=30 -max_len=4096
+          ./build/fuzz_text corpus/text -max_total_time=30 -max_len=512
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install numpy pytest
+      - run: python -m pytest tests/py -q
+
+  swift-linux:
+    runs-on: ubuntu-latest
+    container: swift:6.0
+    steps:
+      - uses: actions/checkout@v4
+      - run: swift test
+      - run: swift test --sanitize=thread
+
+  swift-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: swift --version
+      - run: swift test

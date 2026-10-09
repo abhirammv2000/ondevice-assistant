@@ -11,7 +11,9 @@
 //     the other's copy of the line (false sharing) although they never touch the same variable.
 //   * each side keeps a stale copy of the other's index and only re-reads the real one when the stale copy says the
 //     ring looks full or empty. That turns most operations into plain loads from the thread's own cache line.
-// bench/bench.cpp measures both against a mutex-protected queue.
+// bench/bench.cpp compares it with a mutex-protected queue (about 30x faster) and with a ring that has neither detail.
+// On a 2-vCPU VM that second comparison showed no difference (docs/PERFORMANCE.md), so treat both as the standard
+// design, not as a measured win.
 //
 // It is wrong to call try_push from two threads at once, or try_pop from two threads at once. There is no check.
 #pragma once
