@@ -6,10 +6,10 @@ ask one more question, or send it to a bigger model with the personal details re
 The core is C++20. There is a C interface, a Swift package on top of it, and Python tools for training and evaluation.
 
 ```
-$ assist_cli --model models/clinc150.pmodel --contacts contacts.tsv "set a timer for ten minutes"
+$ assist_cli --model models/clinc150.pmodel --contacts examples/contacts.tsv "set a timer for ten minutes"
 {"route":"on_device","intent":"timer","confidence":1.0000,"action":"timer.set","reply":"Timer set for 10 minutes.", ...}
 
-$ assist_cli --model models/clinc150.pmodel "text 555 123 4567 and email jane@x.com to dana"
+$ assist_cli --model models/clinc150.pmodel --contacts examples/contacts.tsv "text 555 123 4567 and email jane@x.com to dana"
 {"route":"escalate", ..., "forward_text":"text <PHONE> and email <EMAIL> to <NAME>", ...}
 ```
 
@@ -64,7 +64,7 @@ Talks to a local Ollama server. Only the redacted text is sent, and a test check
 
 - `docs/DESIGN.md`: how it works and why, and what it is not
 - `docs/PERFORMANCE.md`: measurements, including two things that did not speed up
-- `docs/INTERVIEW.md`: where each systems topic shows up in the code
+- `docs/TOPICS.md`: where each systems topic (memory mapping, concurrency, testing, ...) shows up in the code, with the limits
 
 ## Layout
 

@@ -2,7 +2,7 @@
 
 Everything here comes from `bench/bench.cpp` (`assist_bench`), built Release with GCC in the `docker/dev.Dockerfile`
 image on a Windows laptop (Docker Desktop, 2 vCPUs given to the VM). Raw numbers are in `results/bench_raw.json`.
-Each figure is the median of 200 batches, with the 99th percentile next to it. A shared 2-vCPU VM is noisy, so treat
+Each figure is the median of many timed batches (200 for most rows, fewer for the slow ones), with the 99th percentile next to it. A shared 2-vCPU VM is noisy, so treat
 differences under about 10% as noise. Rerun on your own machine before quoting any of this.
 
 ## What the request path costs
@@ -47,7 +47,7 @@ The checksum is on by default and can be turned off for a model that was verifie
 
 ## What did not show up
 
-Two things I expected and did not see. Say so in an interview rather than repeating the textbook claim.
+Two things I expected and did not see. They are listed here instead of repeating the textbook claim.
 
 - **Cache-line padding and cached indices in the ring buffer.** The version with both indices side by side and no
   caching ran at 209 million per second against 217 million. That is within noise. False sharing needs two cores

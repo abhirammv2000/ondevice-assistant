@@ -1,7 +1,6 @@
 # Where each topic lives in this project
 
-For each topic: where it is in the code, what to say about it, and what the limit is. The limits matter. Saying
-"here is what this does not show" is part of a good answer.
+For each topic: where it is in the code, what it shows, and what the limit is.
 
 ## Operating systems
 
@@ -26,7 +25,7 @@ the mistake. That check is not kept in the repository.
 **Processes, threads, scheduling.** `AssistService` is a fixed worker pool. Each worker is a `std::thread` with its own
 forked `Engine`. Limit: I did not use priorities, QoS classes or real-time scheduling, which a real audio path would.
 
-**What I would say about Apple platforms specifically.** The code is portable C++20 with no platform calls beyond the
+**Apple platforms.** The code is portable C++20 with no platform calls beyond the
 file mapping. I avoided `std::jthread` and `std::to_chars(double)` because they came late to Apple's libc++. The Swift
 package builds on Linux here and the CI file runs it on macOS; I have not run it on Apple hardware.
 
@@ -135,8 +134,7 @@ toolchain (`docker/dev.Dockerfile`).
 
 ## Using AI coding tools on this project
 
-What I would say: I use an AI coding assistant for drafting, and I do not trust a draft until something independent
-checks it. Here that was golden files shared with a second implementation, sanitizers, a fuzzer with stated
+I use an AI coding assistant for drafting, and I do not trust a draft until something independent checks it. Here that was golden files shared with a second implementation, sanitizers, a fuzzer with stated
 invariants, and measurements. Two examples where the checks mattered: a design comment said cache-line padding would
 make the ring faster, the measurement on my machine did not show it, so the documents say so; and a pointer leaked by
 one of my own tests, which ASan found.

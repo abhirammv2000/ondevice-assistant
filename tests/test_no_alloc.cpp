@@ -29,6 +29,9 @@ TEST_CASE("the counter itself works: a vector allocation is seen") {
     testutil::ScopedAllocCount counter;
     std::vector<int> v(100);
     v[0] = 1;
+    // an optimiser may remove an allocation whose result is never used (clang does at -O2), so make the
+    // vector's storage observable; otherwise this control could report zero and the checks below mean nothing
+    asm volatile("" : : "r"(v.data()) : "memory");
     CHECK(counter.count() >= 1);
 }
 

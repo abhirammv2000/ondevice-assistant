@@ -72,7 +72,7 @@ I trained with 12 to 16 bits of hash space and measured test accuracy on CLINC15
 | 14 | 2.46 MB | 89.1% |
 | 15 | 4.92 MB | 89.2% |
 
-Past 13 bits the model gains about a tenth of a point for each doubling, so 13 bits (1.23 MB) is what ships. The
+Past 13 bits the model gains 0.2 and then 0.1 points per doubling, so 13 bits (1.23 MB) is what ships. The
 sweep is in `docs/results/size_sweep.json`.
 
 ### Calibration
