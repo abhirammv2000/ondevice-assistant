@@ -1,7 +1,7 @@
 """The feature extractor, in Python, following the same specification as core/src/tokenizer.cpp.
 
 The model is trained on what this produces and run on a device that computes the same thing in C++, so the two
-must agree exactly. tests/test_features_parity.py checks this file against golden values, and the C++ tests check
+must agree exactly. tests/py/test_features_parity.py checks this file against golden values, and the C++ tests check
 the C++ code against the same golden values (tools/make_golden.py writes them from this file).
 
 Specification (docs/DESIGN.md has the reasoning):
